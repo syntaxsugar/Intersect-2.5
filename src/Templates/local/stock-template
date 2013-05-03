@@ -2,7 +2,7 @@
 # intersect 2.0 | created by ohdae
 # copyright 2012
 # payload_template to be used with Create.py
-
+from __future__ import with_statement
 import sys, os, re, signal
 from subprocess import Popen,PIPE,STDOUT,call
 import platform
@@ -54,7 +54,10 @@ def environment():
     LASTLOG_FILEPATH    = "/var/log/lastlog"
 
     distro = os.uname()[1]
-    distro2 = platform.linux_distribution()[0]
+    if sys.version_info < (2, 6):
+        distro2 = platform.dist()[0]
+    else:
+        distro2 = platform.linux_distribution()[0]
  
     Home_Dir = os.environ['HOME']
     User_Ip_Address = socket.gethostbyname(socket.gethostname())
